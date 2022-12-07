@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <font size="+2">Fatal Car Crashes.</font>  
     <meta charset="utf-8">
     <title>Leaflet Map</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"/>
@@ -67,16 +68,20 @@ h2{text-align:left;}
 p{text-align:left;}
     </style>
 </head>
-<body>
+<body style="background-color:gray;">
     <!-- Our web map and content will go here -->
     <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <div id="map" style="width: 1000px; height: 600px">
    </div>
   
-    <h2>Fatal Car Crash Locations</h2>
 
     <p>Research Question</p>
+    <p style="text-align:Left;">Previous Research Indicates that there are associations between distance between trauma centers and car crash scenes.</p>
+    <p style="text-align:Left;">Often Times when a fatal crash occurs injured survivors are taken to hospitals when if they do not survive.</p>
+    <p style="text-align:Left;">They are likely to be listed as "died at scene".</p>
+    <p style="text-align:Left;">Depending on distance and potential need for different trauma centers responce times over 45 minutes were 1.23 times more likely to face this scenario.</p>
+    <p style="text-align:Left;">Previous Research Indicates that there are associations between distance between trauma centers and car crash scenes.</p></p>
     <p>How far are hospitals from fatal car crashes.
 
     <p></p>
@@ -85,10 +90,10 @@ p{text-align:left;}
     <p>https://www.opendataphilly.org/dataset/fatal-crashes</p>
     <p>https://www.opendataphilly.org/dataset/philadelphia-hospitals</p>
     <script>
-        var map = L.map('map', {center: [39.981192, -75.155399], zoom: 10});
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '© OpenStreetMap' }).addTo(map);
+        var map = L.map('map', {center: [39.981192, -75.155399], zoom: 11.5});
+        L.tileLayer('http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { attribution: '© OpenStreetMap' }).addTo(map);
         map.doubleClickZoom.enable();
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '© OpenStreetMap' }).addTo(map);
+        L.tileLayer('http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { attribution: '© OpenStreetMap' }).addTo(map);
         
         var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
                 'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -169,7 +174,7 @@ $.getJSON("Fatal_Crashes.geojson",function(data){
             })
         }),
         onEachFeature: function(feature, layer){
-            layer.bindPopup('Fatal Crash: ');
+            layer.bindPopup('Fatal Crash: '+feature.properties.DATE_+' Crash Type: '+feature.properties.CRASH_TYPE+' Investigation Status: '+feature.properties.INVESTIGAT+' AGE: '+feature.properties.AGE);
 
         }
         
@@ -184,14 +189,7 @@ L.control.layers(baseMaps, overlayLayer).addTo(map);
 
 
 
-function onEachFeatureFunc(feature, layer){
-    layer.on({
-        mouseover: highlightFeature,
-        mouseout: resetHighlight,
-        click: zoomFeature
-    });
-    layer.bindPopup('Number of Mortalities: '+feature.properties.OBJECTID);
-}
+
 
     </script>
 </body>
